@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/user_main.css"/>
+    <title>用户主页</title>
+</head>
+<body style="background-color:#eeeeee">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/utils.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/weixin_login.js"> </script>
+    <script src="/static/js/user_main.js"> </script>
+
+
+    <!--头像部分-->
+    <div class="user_div">
+        <img src="/static/Images/user_head.png" class="user_head">
+
+        <div class="user_detail">
+            <div style="font-size: 3em;color: #111111" id="uName">曹家驹</div>
+            <div style="font-size: 2.5em;color: red;margin-top: 2pc;cursor:pointer;" id="phoneBind">绑定手机</div>
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+
+
+    <!--订单中心-->
+    <div class="order_div">
+        <div style="margin-left: 5%;padding-top: 25px;font-size: 3.0em;height: 100px">订单中心</div>
+        <div class="seperatoLine"></div>
+        <div class="item_function" onclick="javascrtpt:window.location.href='./user_qx_orders.html'">
+            <img class="itemLogo" src="/static/Images/qingxi.png">
+            <div class="itemTitle">清洗订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+        <div class="seperatoLine"></div>
+
+        <!--<div class="item_function" onclick="javascrtpt:window.location.href='./user_setup_orders.html'">-->
+            <!--<img class="itemLogo" src="/static/Images/setup.png">-->
+            <!--<div class="itemTitle">安装订单</div>-->
+            <!--<img class="right_arrow" src="/static/Images/right.png">-->
+        <!--</div>-->
+        <!--<div class="seperatoLine"></div>-->
+
+        <div class="item_function" onclick="javascrtpt:window.location.href='./user_wx_orders.html'">
+            <img class="itemLogo" src="/static/Images/weixiu.png">
+            <div class="itemTitle">维修订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+
+    <!--评论与优惠券-->
+    <div class="remarkTitckets">
+        <!--<div class="item_function"onclick="javascrtpt:window.location.href='./user_remarks.html'">-->
+            <!--<img class="itemLogo" src="/static/Images/setup.png">-->
+            <!--<div class="itemTitle">我的评论</div>-->
+            <!--<img class="right_arrow" src="/static/Images/right.png">-->
+        <!--</div>-->
+        <!--<div class="seperatoLine"></div>-->
+
+        <div class="item_function" onclick="javascrtpt:window.location.href='./user_tickets.html'">
+            <img class="itemLogo" src="/static/Images/youhuijuan.png">
+            <div class="itemTitle">我的优惠券</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+    <!--地址管理-->
+
+    <div>
+        <div class="item_function" onclick="javascrtpt:window.location.href='./user_addresss.html'">
+            <img class="itemLogo" src="/static/Images/dizhi.png">
+            <div class="itemTitle">地址管理</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+    </div>
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+
+    <!--服务商与工程师登录-->
+    <div style="margin-bottom: 150px;height: 18pc">
+        <div class="remarkTitckets">
+            <div class="item_function" onclick="javascrtpt:window.location.href='./login_org.html'">
+                <img class="itemLogo" src="/static/Images/org.png">
+                <div class="itemTitle">服务商登录</div>
+                <img class="right_arrow" src="/static/Images/right.png">
+            </div>
+            <div class="seperatoLine"></div>
+
+            <div class="item_function" onclick="javascrtpt:window.location.href='./login_emplyee.html'">
+                <img class="itemLogo" src="/static/Images/emplyee.png">
+                <div class="itemTitle">工程师登录</div>
+                <img class="right_arrow" src="/static/Images/right.png">
+            </div>
+        </div>
+    </div>
+
+        <div class="nav">
+            全国服务电话：{{Help_Line}}
+        </div>
+</body>
+</html>

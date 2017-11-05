@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('/static/css/login_org.css');
+    </style>
+    <title>服务商登录</title>
+</head>
+<body>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/jquery.blockUI.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/login_org.js"> </script>
+
+    <div id="top_div">
+        <img id="top_image" src="/static/Images/order_default.png" style="width: 200px;height: 200px">
+    </div>
+    <div style="width: 98%;height: 140px;text-align: center;margin-left: 20px">
+        <div style="width: 160px;height: 100px;line-height:140px;float: left;font-size: 2.5em">手机号码</div>
+        <div style="width: 70%;float: left;font-size: 2em;">
+            <INPUT id="org_phone" class="inputEdit" type="text" value="请输入手机号码" onfocus="javascript:if(this.value=='请输入手机号码')this.value='';">
+        </div>
+    </div>
+    <div class="seperatoLine"></div>
+
+    <div style="width: 98%;height: 140px;text-align: center;margin-left: 20px">
+            <div style="width: 160px;height: 100px;line-height:140px;float: left;font-size: 2.5em">账户密码</div>
+            <div style="width: 70%;float: left;font-size: 2em">
+                <INPUT id="org_passwd" class="inputEdit" type="text" value="请输入密码" onfocus="javascript:if(this.value=='请输入密码')this.value='';">
+            </div>
+        </div>
+        <div class="seperatoLine"></div>
+
+
+        <div class="nav" onclick="$.loginOrg('aafd')">
+            登录
+        </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url('/static/css/add_emplyee.css');
+    </style>
+    <title>添加员工</title>
+</head>
+<body>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/jquery.blockUI.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/add_emplyee.js"> </script>
+
+    <div style="width: 98%;height: 140px;text-align: center;margin-left: 20px">
+        <div style="width: 160px;height: 100px;line-height:140px;float: left;font-size: 2.5em">姓名</div>
+        <div style="width: 70%;float: left;font-size: 2em;">
+            <INPUT id="emp_name" class="inputEdit" type="text" value="姓名" onfocus="javascript:if(this.value=='姓名')this.value='';">
+        </div>
+    </div>
+    <div class="seperatoLine"></div>
+
+    <div style="width: 98%;height: 140px;text-align: center;margin-left: 20px">
+            <div style="width: 160px;height: 100px;line-height:140px;float: left;font-size: 2.5em">电话</div>
+            <div style="width: 70%;float: left;font-size: 2em">
+                <INPUT id="emp_phone" class="inputEdit" type="text" value="电话" onfocus="javascript:if(this.value=='电话')this.value='';">
+            </div>
+        </div>
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 140px;text-align: center;margin-left: 20px">
+            <div style="width: 160px;height: 100px;line-height:140px;float: left;font-size: 2.5em">密码</div>
+            <div style="width: 70%;float: left;font-size: 2em">
+                <INPUT id="emp_passwd" class="inputEdit" type="text" value="密码" onfocus="javascript:if(this.value=='密码')this.value='';">
+            </div>
+        </div>
+        <div class="seperatoLine"></div>
+
+        <div class="nav" onclick="$.saveAddress('aafd')">
+            保存数据
+        </div>
+</body>
+</html>

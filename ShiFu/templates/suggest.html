@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>意见反馈</title>
+        <style>
+        @import url('/static/css/suggest.css');
+    </style>
+
+</head>
+<body>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/jquery.blockUI.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/weixin_login.js"> </script>
+    <script src="/static/js/suggest.js"> </script>
+
+    <div class="topDiv">
+        <img class="topImage" src="/static/Images/suggest_banner.png">
+    </div>
+
+    <div style="font-size: 3em;margin-top: 30px;margin-left: 30px">
+        意见反馈
+    </div>
+
+    <div style="font-size: 1.5em;margin-top: 20px;margin-left: 3%">
+        亲～，请留下您宝贵的意见，我们会认真对待您的任何反馈。
+    </div>
+
+    <div class="seperatoLine"></div>
+
+    <div style="font-size: 3em;margin-left: 30px;margin-top: 30px">
+        您对我们的服务满意么？
+    </div>
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left;width: 50px;height: 50px;margin-left: 30px;margin-top: 30px" onclick="$.changeSelect('#level1')" name="0" id="level1">
+        <div class="choice-description" style="float:left;margin-top: 30px;margin-left: 20px" >
+            非常满意
+        </div>
+    </div>
+
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px"  onclick="$.changeSelect('#level2')" name="0" id="level2">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            满意
+        </div>
+    </div>
+
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px"  onclick="$.changeSelect('#level3')" name="0" id="level3">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            一般
+        </div>
+    </div>
+
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px"  onclick="$.changeSelect('#level4')" name="0" id="level4">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            不满意
+        </div>
+    </div>
+
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px"  onclick="$.changeSelect('#level5')" name="0" id="level5">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            非常不满意
+        </div>
+    </div>
+
+    <div class="seperatoLine"></div>
+
+    <div style="font-size: 3em;margin-left: 3%;margin-top: 30px">
+        您最喜欢的部分是
+    </div>
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px"  onclick="$.changeLikeSelect('#like1')" name="0" id="like1">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            服务
+        </div>
+    </div>
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px" onclick="$.changeLikeSelect('#like2')" name="0" id="like2">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            维修
+        </div>
+    </div>
+    <div class="choices">
+       <img src="/static/Images/uncheck.png" style="float:left; width: 50px;height: 50px;margin-left: 30px;margin-top: 30px" onclick="$.changeLikeSelect('#like3')" name="0" id="like3">
+        <div class="choice-description" style="margin-top: 30px;margin-left: 20px;float: left;width: 80%" >
+            清洗
+        </div>
+    </div>
+
+    <div class="seperatoLine"></div>
+
+    <div style="font-size: 3em;margin-left: 3%;margin-top: 30px">
+        您希望给我们提出的建议是？
+    </div>
+    <textarea rows="3" cols="20" style="width: 94%;height: 200px;font-size: 2.5em;margin-left: 3%;margin-right: 30px" id="suggest_info">
+    在w3school，你可以找到你所需要的所有的网站建设教程。
+    </textarea>
+
+    <div style="font-size: 3em;margin-left: 3%;margin-top: 30px">
+        希望获得联系
+    </div>
+    <div style="font-size: 1.5em;margin-top: 10px;margin-left: 3%">
+        如果您希望我们联系您，可以留下您的微博、邮箱或者QQ号。
+    </div>
+
+    <input type="text" value="" name="contace_input" id="contace_input" style="font-size:2em;margin-left: 3%;width: 64%;height: 60px">
+
+    <div class="nav" onclick="$.commitQuestion()">
+            提交意见
+    </div>
+
+</body>
+</html>

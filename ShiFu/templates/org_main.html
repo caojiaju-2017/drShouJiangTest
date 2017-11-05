@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/org_main.css"/>
+    <title>服务商后台</title>
+</head>
+<body style="background-color:#eeeeee">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/utils.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/weixin_login.js"> </script>
+    <script src="/static/js/org_main.js"> </script>
+
+    <div id="add_button" onclick="javascrtpt:window.location.href='./add_emplyee.html'">
+    添加
+    </div>
+
+    <div class="home_card">
+        <img src="/static/Images/default_head2.png" class="login_head">
+
+        <div class="login_info_div">
+            <div style="width: 100%;height:120px;line-height: 160px">账户姓名：{{Org_Name}}</div>
+            <div style="width: 100%;height:100px;line-height: 40px">手机号码：{{Org_Phone}}</div>
+        </div>
+
+        <div class="operator_info_div">
+            <img src="/static/Images/myorders.png" style="width: 90px;height: 90px;margin-top: 5px" onclick="$.loadDatas(0)" />
+            <img src="/static/Images/myemplyees.png" style="width: 90px;height: 90px" onclick="$.loadDatas(1)"/>
+        </div>
+    </div>
+    <div class="topSep"></div>
+    <div class="order_div" id="qx_order_list"></div>
+
+</body>
+</html>

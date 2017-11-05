@@ -1,0 +1,31 @@
+.inputEdit
+{
+    height: 100px;
+    line-height: 130px;
+    width: 90%;
+    color: #707070;
+    font-size: 1em;
+    border: none;
+    text-align: left;
+}
+
+.seperatoLine
+{
+    width: 100%;
+    height: 1px;
+    margin-top: 20px;
+    background-color: #aaaaaa;
+}
+
+.nav {
+    postion:relative;
+    bottom:0px;margin:0px;float:left;width:100%;;height: 150px;margin-left: 0px;margin-right: 0px;
+    margin:0 auto;
+    background:#EA5504;
+    position:fixed;
+    color: white;
+    bottom:0;
+    font-size: 4em;
+    line-height: 150px;
+    text-align:center;
+}

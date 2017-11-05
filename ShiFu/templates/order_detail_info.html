@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>订单详情</title>
+  <style>@import "/static/css/app.css";
+</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+ </head>
+ <body data-maq-device="android_480x800" data-maq-flow-layout="true" data-maq-comptype="mobile" class="claro" data-maq-ws="collapse" data-maq-appstates="{}" id="myapp">
+
+     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/jquery.blockUI.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/order_detail_info.js"> </script>
+
+
+  <div style="width: 100%; height: 54px;">
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 20px;line-height: 54px;"><strong>订单号</strong></span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 82px;line-height: 54px;color: #666666">{{Order_Code}}</span>
+   <span  style="font-size: 14px; float: right;line-height: 54px;margin-right: 30px;color: #EA5504">{{Order_State}}</span>
+  </div>
+
+  <div class="seperator_line"></div>
+
+  <div style="width: 100%; height: 111px;">
+   <span class="large_tag" style="top: 64px;"><strong>客户信息</strong></span>
+   <span style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 93px;">姓名</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; font-weight: normal; font-style: normal; font-family: Arial,Helvetica,sans-serif; left: 100px; top: 93px;color: #666666;">{{Custom_Name}}</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 116.5px;">电话</span>
+   <span  style="font-size: 14px; font-weight: normal; font-style: normal; position: absolute; z-index: 900; font-family: Arial,Helvetica,sans-serif; left: 100px; top: 116.5px;color: #666666;">{{Custom_Phone}}</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 142px;">地址</span>
+   <span  style="font-size: 14px; font-weight: normal; font-style: normal; font-family: Arial,Helvetica,sans-serif; position: absolute; z-index: 900; left: 100px; top: 142px;color: #666666;">{{Custom_Address}}</span>
+  </div>
+
+  <div class="seperator_line"></div>
+
+  <div style="width: 100%; height: 180px; left: 0px; top: 190px;">
+   <span class="large_tag" style="top: 175px;"><strong>订单信息</strong></span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 206px;">产品名称</span>
+   <span  style="font-size: 14px; font-weight: normal; font-style: normal; font-family: Arial,Helvetica,sans-serif; position: absolute; z-index: 900; left: 134px; top: 206px;color: #666666;">{{Product_Name}}</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 229.5px;">产品价格</span>
+   <span  style="font-size: 14px; font-weight: normal; font-style: normal; font-family: Arial,Helvetica,sans-serif; position: absolute; z-index: 900; left: 134px; top: 229.5px;color: #666666;">{{Product_Price}}</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 285px;">问题描述</span>
+   <textarea style="position: absolute; z-index: 900; height: 78px; left: 134px; top: 255px; width: 60%;color: #666666;border-color: #CCCCCC;border-width: 1px;" {{WorkSpace1}}>{{Other_Info}}</textarea>
+  </div>
+
+  <div class="seperator_line"></div>
+
+   <div style="width: 100%; height: 85px;">
+   <span class="large_tag" style="top: 356px;"><strong>工程师信息</strong></span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 383px;">姓名</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; font-weight: normal; font-style: normal; font-family: Arial,Helvetica,sans-serif; left: 100px; top: 383px;color: #666666;">{{Emp_Name}}</span>
+   <span  style="font-size: 14px; position: absolute; z-index: 900; left: 41px; top: 406.5px;">电话</span>
+   <span  style="font-size: 14px; font-weight: normal; font-style: normal; position: absolute; z-index: 900; font-family: Arial,Helvetica,sans-serif; left: 100px; top: 406.5px;color: #666666;">{{Emp_Phone}}</span>
+  </div>
+
+  <div class="seperator_line"></div>
+
+  <div style="width: 100%; height: 100px;">
+    <span class="large_tag" style="top: 460px;"><strong>订单控制</strong></span>
+
+
+     <textarea id="extern_info" style="height: 116px; width: 70%; position: absolute; z-index: 900; left: 94px; top: 470px;border-color: #CCCCCC;border-width: 1px" {{WorkSpace2}}>{{Terminal_Info}}</textarea>
+
+
+    <select id="empy_select" style="height: 40px; width: 50%; position: absolute; z-index: 900; left: 94px; top: 610px;" {{PaiDanButton}}>
+     {% for key,value in Emplyee_Datas.items %}
+          <option value="{{ key }}"> {{ value }} </option>
+     {% endfor %}
+    </select>
+
+  </div>
+
+  <button style="width: 83px; height: 28px; position: absolute; z-index: 900; left: 80px; top: 660px;" onclick="$.paiOrder('{{Order_Code}}')" {{PaiDanButton}}> 派单</button>
+  <button style="width: 83px; height: 28px; position: absolute; z-index: 900; left: 180px; top: 660px;" onclick="$.finishOrder('{{Order_Code}}')" {{FinishButton}}> 完成</button>
+  <button style="width: 83px; height: 28px; position: absolute; z-index: 900; left: 270px; top: 660px;" onclick="$.terminalOrder('{{Order_Code}}')" {{TerminalShow}}> 终止</button>
+
+  <div style="height: 1px;top: 720px;width: 100%; position: absolute"></div>
+ </body>
+</html>

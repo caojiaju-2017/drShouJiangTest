@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单详情</title>
+        <style>
+        @import url('/static/css/order_detail_info.css');
+    </style>
+
+</head>
+<body>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/md5.js"></script>
+    <script src="/static/js/jquery.blockUI.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/order_detail_info.js"> </script>
+
+    <!--顶部-->
+    <div class="top_div">
+        <div class="top1">订单号：{{Order_Code}}</div>
+        <div class="top2">{{Order_State}}</div>
+    </div>
+
+    <div class="seperatoLine"></div>
+
+    <!--购买信息-->
+    <div class="buy_info">
+        <div class="ItemTitle">购买信息</div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>产品名称：</strong></div>
+            <div class="Info_Value">{{Product_Name}}</div>
+        </div>
+        <br />
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>服务价格：</strong></div>
+            <div class="Info_Value">{{Product_Price}}</div>
+        </div>
+        <div style="width: 100%">
+            <div class="Info_Tag" style="float: none;margin-top: 20px"><strong>客户补充说明：</strong></div>
+        </div>
+        <div style="width: 82%;margin-left: 150px;font-size: 2em;text-align: left;color: #999999">
+            {{Other_Info}}
+        </div>
+    </div>
+
+
+    <!--客户信息-->
+    <div class="buy_info">
+        <div class="ItemTitle">客户信息</div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>姓名：</strong></div>
+            <div class="Info_Value">{{Custom_Name}}</div>
+        </div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>电话：</strong></div>
+            <div class="Info_Value">{{Custom_Phone}}</div>
+        </div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>地址：</strong></div>
+            <div class="Info_Value">{{Custom_Address}}</div>
+        </div>
+
+    </div>
+
+
+
+
+    <!--工程师信息-->
+    <div class="buy_info" {{showEmplyee}}>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div class="ItemTitle">工程师信息</div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>姓名：</strong></div>
+            <div class="Info_Value">{{Emp_Name}}</div>
+        </div>
+        <div style="width: 100%">
+            <div class="Info_Tag"><strong>电话：</strong></div>
+            <div class="Info_Value">{{Emp_Phone}}</div>
+        </div>
+    </div>
+
+    <!--控制区域-->
+    <div {{WorkSpace}}>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div class="ItemTitle">工作区</div>
+
+    </div>
+    <div>
+        <input style="width: 60%;height: 160px;margin-left: 10%;float: left" value="{{Terminal_Info}}"  disabled="{{TerminalShow}}"/>
+        <div style="float: left;width: 10%">
+            <button type="button" style="width: 160px;height: 60px;font-size: 1.5em;" {{FinishButton}}>完成</button>
+            <button type="button" style="width: 160px;height: 60px;font-size: 1.5em;margin-top: 40px" {{TerminalButton}}>终止</button>
+        </div>
+    </div>
+    <div {{PaiDanButton}}>
+        <select id="aaaa" style="margin-left: 10%;font-size: 2em;width: 180px; height: 60px">
+            {% for key,value in Emplyee_Datas.items %}
+                  <option value="{{ value }}"> {{ value }} </option>
+            {% endfor %}
+        </select>
+        <button type="button" style="width: 160px;height: 60px;font-size: 1.5em;margin-top: 40px;margin-left: 40px">派发</button>
+    </div>
+    <div style="height: 60px">
+
+    </div>
+
+</body>
+</html>
