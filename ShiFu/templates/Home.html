@@ -4,30 +4,39 @@
     <meta charset="UTF-8">
     <title>主页</title>
     
-    <link rel="stylesheet" type="text/css" href="homep.css"/>
     <!--<style>.da1{ width:161px; height:130px; background-color: bisque; position:absolute; top:250px; left:550px; cursor:pointer;}</style>-->
 </head>
 <body>
 
 
-<input type="button" value="下单首页" style="width: 200px;height: 100px;font-size: 2em"
-       onclick="javascrtpt:window.location.href='./begin_order.html'">
+<input type="button" value="我要预约" style="width: 200px;height: 100px;font-size: 2em"
+       onclick="javascrtpt:window.location.href='./home_index.html'">
 
-<input type="button" value="个人中心"  style="width: 200px;height: 100px;font-size: 2em"
-       onclick="javascrtpt:window.location.href='./user_main.html'" style="background-color: antiquewhite">
+<input type="button" value="登陆服务商"  style="width: 200px;height: 100px;font-size: 2em"
+       onclick="javascrtpt:window.location.href='./login_org.html'" style="background-color: antiquewhite">
+
+<input type="button" value="工程师登陆"  style="width: 200px;height: 100px;font-size: 2em"
+       onclick="javascrtpt:window.location.href='./login_emplyee.html'" style="background-color: antiquewhite">
 
 
 <input type="button" value="首匠介绍"  style="width: 200px;height: 100px;font-size: 2em"
-       onclick="javascrtpt:window.location.href='./introduce.html'">
+       onclick="javascrtpt:window.location.href='http://d.eqxiu.com/s/O9R6AUNk'">
 <input type="button" value="反馈建议"  style="width: 200px;height: 100px;font-size: 2em"
        onclick="javascrtpt:window.location.href='./suggest.html'">
 <input type="button" value="服务流程"  style="width: 200px;height: 100px;font-size: 2em"
        onclick="javascrtpt:window.location.href='./service_flow.html'">
 
+<input type="button" value="下单页面测试"  style="width: 200px;height: 100px;font-size: 2em"
+       onclick="javascrtpt:window.location.href='./begin_order.html'">
 
-<input type="button" value="微信授权"  style="width: 200px;height: 100px;font-size: 2em"
-       onclick="javascrtpt:window.location.href='./testWX'">
+
+<form enctype="multipart/form-data" action="/uploadFile/" method="post">
+     <input type="file" name="myfile" />
+     <br/>
+     <input type="submit" value="upload"/>
+  </form>
+
+
 </body>
-
 
 </html>

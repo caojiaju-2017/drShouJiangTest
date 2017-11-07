@@ -41,18 +41,18 @@ class DRManageApi(object):
             return DRManageApi.Dele_Emplyee(req)
         elif command == "Modi_Emplyee".upper():
             return DRManageApi.Modi_Emplyee(req)
-        elif command == "Add_QXProduct".upper():
-            return DRManageApi.Add_QXProduct(req)
-        elif command == "Modi_QXProduct".upper():
+        elif command == "Add_Product".upper():
+            return DRManageApi.Add_Product(req)
+        elif command == "Modi_Product".upper():
             return DRManageApi.Modi_QXProduct(req)
-        elif command == "Dele_QXProduct".upper():
+        elif command == "Dele_Product".upper():
             return DRManageApi.Dele_QXProduct(req)
-        elif command == "Add_WXProduct".upper():
-            return DRManageApi.Add_WXProduct(req)
-        elif command == "Modi_WXProduct".upper():
-            return DRManageApi.Modi_WXProduct(req)
-        elif command == "Dele_WXProduct".upper():
-            return DRManageApi.Dele_WXProduct(req)
+        # elif command == "Add_WXProduct".upper():
+        #     return DRManageApi.Add_WXProduct(req)
+        # elif command == "Modi_WXProduct".upper():
+        #     return DRManageApi.Modi_WXProduct(req)
+        # elif command == "Dele_WXProduct".upper():
+        #     return DRManageApi.Dele_WXProduct(req)
         elif command == "Get_Orgs".upper():
             return DRManageApi.Get_Orgs(req)
         elif command == "Add_Org".upper():
@@ -161,11 +161,20 @@ class DRManageApi(object):
             Pswd = postDataList["Pswd".lower()]
             City = postDataList["City".lower()]
             Name = postDataList["Name".lower()]
-            Longite =int(postDataList["Longite".lower()])
-            Langite = int(postDataList["Langite".lower()])
         except Exception ,ex:
             print postDataList
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
+            return HttpResponse(loginResut)
+
+        # 不強制要求
+        Longite = int(postDataList["Longite".lower()])
+        Langite = int(postDataList["Langite".lower()])
+
+        # 服务商注册检查
+        existOrg  = SjSrvOrg.objects.filter(phone=Phone,state=1).first()
+
+        if existOrg:
+            loginResut = json.dumps({"ErrorInfo": "该服务商注册过账号，请更换手机号码", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
         print  postDataList
@@ -223,6 +232,7 @@ class DRManageApi(object):
             oneRecord['longite'] = one.longite
             oneRecord['langite'] = one.langite
             oneRecord['city'] = one.city
+            oneRecord['name'] = one.name
 
             rtnResult.append(oneRecord)
         rtnDict["MaxCount"] = len(orgUsers)
@@ -242,7 +252,7 @@ class DRManageApi(object):
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
-        product = SjQxServices.objects.filter(code=Code).first()
+        product = SjServices.objects.filter(code=Code).first()
 
         if not product:
             loginResut = json.dumps({"ErrorInfo": "产品数据不存在", "ErrorId": 20001, "Result": None})
@@ -278,7 +288,7 @@ class DRManageApi(object):
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
-        product = SjQxServices.objects.filter(code = Code).first()
+        product = SjServices.objects.filter(code = Code).first()
 
         if not product:
             loginResut = json.dumps({"ErrorInfo": "产品数据不存在", "ErrorId": 20001, "Result": None})
@@ -349,7 +359,7 @@ class DRManageApi(object):
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
-        product = SjQxServices.objects.filter(code=Code)
+        product = SjServices.objects.filter(code=Code)
 
         if not product:
             loginResut = json.dumps({"ErrorInfo": "产品数据不存在", "ErrorId": 20001, "Result": None})
@@ -392,7 +402,7 @@ class DRManageApi(object):
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
-        product = SjQxServices.objects.filter(code = Code)
+        product = SjServices.objects.filter(code = Code)
 
         if not product:
             loginResut = json.dumps({"ErrorInfo": "产品数据不存在", "ErrorId": 20001, "Result": None})
@@ -425,29 +435,106 @@ class DRManageApi(object):
 
 
     @staticmethod
-    def Add_QXProduct(request):
+    def Add_Product(request):
         # 提取post数据
         postDataList = {}
         postDataList = getPostData(request)
         print postDataList
+        Image1 = None
+        Image2 = None
+        Image3 = None
+        DetailImage = None
+
+        try:
+            Image1 = base64.b64decode(postDataList['Image1'.lower()])
+        except:
+            pass
+
+        try:
+            Image2 = base64.b64decode(postDataList['Image2'.lower()])
+        except:
+            pass
+
+        try:
+            Image3 = base64.b64decode(postDataList['Image3'.lower()])
+        except:
+            pass
+
+
+        try:
+            DetailImage = base64.b64decode(postDataList['DetailImage'.lower()])
+        except:
+            pass
+
+
         try:
             Name = postDataList["Name".lower()]
-            ImgName = postDataList["ImgName".lower()]
-            City = postDataList["City".lower()]
             Price = float(postDataList["Price".lower()])
-            OrigPrice = float(postDataList["OrigPrice".lower()])
+
+            try:
+                OrigPrice = float(postDataList["OrigPrice".lower()])
+            except:
+                OrigPrice = -1
+
+            Info = postDataList["Info".lower()]
+            ServiceTime = postDataList["ServiceTime".lower()]
+            ServiceType = int(postDataList["ServiceType".lower()])
         except:
             loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
             return HttpResponse(loginResut)
 
-        newService = SjQxServices()
+        newService = SjServices()
         newService.code = uuid.uuid1().__str__().replace("-", "")
         newService.name = Name
-        newService.imgname = ImgName
-        newService.city = City
         newService.price = Price
         newService.origprice = OrigPrice
         newService.state = 1
+        newService.info = Info
+        newService.servicetime = ServiceTime
+        newService.servicetype = ServiceType
+        newService.viewcount = 0
+        newService.bookcount = 0
+
+        # 处理图片
+        if Image1:
+            img1Code = uuid.uuid1().__str__().replace("-", "")
+            try:
+                file = open(os.path.join(os.path.join(STATIC_ROOT,"ProductImage"),'%s.jpg'% img1Code), 'wb')
+                file.write(Image1)
+                file.close()
+                newService.imgname1 = img1Code + ".jpg";
+            except:
+                pass
+        if Image2:
+            img2Code = uuid.uuid1().__str__().replace("-", "")
+            try:
+                file = open(os.path.join(os.path.join(STATIC_ROOT,"ProductImage"),'%s.jpg'% img2Code), 'wb')
+                file.write(Image2)
+                file.close()
+                newService.imgname2 = img2Code + ".jpg";
+            except:
+                pass
+        if Image3:
+            img3Code = uuid.uuid1().__str__().replace("-", "")
+            try:
+                file = open(os.path.join(os.path.join(STATIC_ROOT,"ProductImage"),'%s.jpg'% img3Code), 'wb')
+                file.write(Image3)
+                file.close()
+                newService.imgname3 = img3Code + ".jpg";
+            except:
+                pass
+
+        if DetailImage:
+            DetailImageCode = uuid.uuid1().__str__().replace("-", "")
+            try:
+                file = open(os.path.join(os.path.join(STATIC_ROOT,"ProductImage"),'%s.jpg'% DetailImageCode), 'wb')
+                file.write(Image3)
+                file.close()
+                newService.detailimage = DetailImageCode + ".jpg";
+            except:
+                pass
+
+
 
         commitDataList = []
         commitDataList.append(CommitData(newService, 0))
@@ -733,6 +820,7 @@ class DRManageApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
+        print postDataList
         try:
             userCode = postDataList["Phone".lower()]
             Password = postDataList["Password".lower()]
@@ -780,7 +868,7 @@ class DRManageApi(object):
         except:
             Type = -1
 
-        srvUser = SjSrvOrg.objects.filter(phone = userCode).first()
+        srvUser = SjSrvOrg.objects.filter(phone = userCode,state = 1).first()
 
         if (Type == -1 and userCode != "admin") or not srvUser:
             loginResut = json.dumps({"ErrorInfo": "您的账号不存在", "ErrorId": 10001, "Result": ""})
@@ -793,37 +881,28 @@ class DRManageApi(object):
         loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": srvUser.code})
         return HttpResponse(loginResut)
 
-    @staticmethod
-    def View_Image(request):
-
-        try:
-            imagename = request.GET.get('imagename')
-            type = int(request.GET.get('type'))
-        except:
-            loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
-            return HttpResponse(loginResut)
-        #
-        imageFilePath = None
-        if type == 0: # 主logo
-            imageFilePath = os.path.join(STATIC_ROOT, "%s"%imagename)
-        elif type == 1: # 厂商
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"factory"), "%s.jpg" % imagename)
-        elif type == 2: # 厂商
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"expert"), "%s.jpg" % imagename)
-        elif type == 3:
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT, "Images"), imagename)
-        if not imageFilePath:
-            return HttpResponse()
-
-        image_data = None
-        try:
-            image_data = open(imageFilePath, "rb").read()
-        except:
-            pass
-
-        # return image_data
-
-        return HttpResponse(image_data)
+    # @staticmethod
+    # def View_Image(request):
+    #     try:
+    #         imagename = request.GET.get('imagename')
+    #         type = int(request.GET.get('type'))
+    #     except:
+    #         loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
+    #         return HttpResponse(loginResut)
+    #     #
+    #     imageFilePath = None
+    #
+    #     imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"ProductImage"), "%s" % imagename)
+    #
+    #     image_data = None
+    #     try:
+    #         image_data = open(imageFilePath, "rb").read()
+    #     except:
+    #         pass
+    #
+    #     # return image_data
+    #
+    #     return HttpResponse(image_data)
 
 
 def getPostData(request):

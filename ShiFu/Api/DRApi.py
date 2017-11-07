@@ -37,11 +37,12 @@ class DRApi(object):
             return DRApi.Release_Suggest(req)
         elif command  == "Add_Order".upper():
             return DRApi.Add_Order(req)
-        elif command  == "Add_Order".upper():
-            return DRApi.Add_Order(req)
+        elif command  == "Get_ProductInfo".upper():
+            return DRApi.Get_ProductInfo(req)
         elif command  == "Set_City".upper():
             return DRApi.Set_City(req)
-
+        elif command  == "View_Image".upper():
+            return DRApi.View_Image(req)
     @staticmethod
     def Set_City(request):
         # 提取post数据
@@ -77,32 +78,110 @@ class DRApi(object):
 
 
     @staticmethod
+    def Get_ProductInfo(request):
+        Code = request.GET.get('Code'.lower())
+        one = SjServices.objects.filter(state=1,code=Code).first()
+
+        if not one:
+            loginResut = json.dumps({"ErrorInfo": "产品不存在", "ErrorId": 200, "Result": None})
+            return HttpResponse(loginResut)
+
+        oneRecord = {}
+        oneRecord["Code"] = one.code
+        oneRecord['Name'] = one.name
+        oneRecord['Price'] = one.price
+
+        oneRecord['OrigPrice'] = one.origprice
+
+        if one.imgname1 and len(one.imgname1) > 0:
+            oneRecord['ImgName1'] = "/static/ProductImage/" + one.imgname1
+        else:
+            oneRecord['ImgName1'] = None
+
+        if one.imgname2 and len(one.imgname2) > 0:
+            oneRecord['ImgName2'] = "/static/ProductImage/" + one.imgname2
+        else:
+            oneRecord['ImgName2'] = None
+
+        if one.imgname3 and len(one.imgname3) > 0:
+            oneRecord['ImgName3'] = "/static/ProductImage/" + one.imgname3
+        else:
+            oneRecord['ImgName3'] = None
+
+        if one.detailimage and len(one.detailimage) > 0:
+            oneRecord['DetailImage'] = "/static/ProductImage/" + one.detailimage
+        else:
+            oneRecord['DetailImage'] = None
+
+        oneRecord['Info'] = one.info
+        oneRecord['BookCount'] = one.bookcount
+        oneRecord['ViewCount'] = one.viewcount
+        oneRecord['ServiceTime'] = one.servicetime
+        oneRecord['ServiceType'] = one.servicetype
+
+        one.viewcount = one.viewcount + 1
+
+        commitDataList = []
+        commitDataList.append(CommitData(one, 0))
+
+        # 事务提交
+        try:
+            result = commitCustomDataByTranslate(commitDataList)
+
+            if not result:
+                pass
+        except Exception, ex:
+            pass
+
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": oneRecord})
+        return HttpResponse(loginResut)
+    @staticmethod
     def Add_Order(request):
         # 提取post数据
         postDataList = {}
         postDataList = getPostData(request)
 
+        print postDataList
+
         CCode = postDataList["CCode".lower()]
         Price = float(postDataList["Price".lower()])
-        AddrCode = postDataList["AddrCode".lower()]
+        ContactName = postDataList["Name".lower()]
+        Address = postDataList["Address".lower()]
+        Phone = postDataList["Phone".lower()]
         OCode = postDataList["OCode".lower()]
-        Type = int(postDataList["Type".lower()])
         PCode = postDataList["PCode".lower()]
+        ServiceTimeT = postDataList["servicetime".lower()]
+        Otherinfo = postDataList["otherinfo".lower()]
+        Count = int(postDataList["Count".lower()])
 
         newOrder = SjCustomOrders()
         newOrder.code = uuid.uuid1().__str__().replace("-","")
         newOrder.ccode = CCode
         newOrder.price = Price
-        newOrder.addrcode = AddrCode
         newOrder.ocode = OCode
-        newOrder.type = Type
         newOrder.srvcode = PCode
-        newOrder.odatetime = time.strftime('%Y-%m-%d %H-%M-%S', time.localtime(time.time()))
-        newOrder.lasttime =  time.strftime('%Y-%m-%d %H-%M-%S', time.localtime(time.time()))
+        newOrder.contactname = ContactName
+        newOrder.address = Address
+        newOrder.contactphone = Phone
+        newOrder.extern1 = Otherinfo
+        newOrder.count = Count
+        newOrder.state = 1
+        newOrder.servertime = ServiceTimeT
+        newOrder.odatetime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+        newOrder.lasttime =  time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 
+        product = SjServices.objects.filter(code=PCode,state=1).first()
+
+        if not product:
+            loginResut = json.dumps({"ErrorInfo": "产品数据异常", "ErrorId": 20999, "Result": None})
+            return HttpResponse(loginResut)
+
+        product.bookcount = product.bookcount + 1
+        newOrder.type = product.servicetype
 
         commitDataList = []
         commitDataList.append(CommitData(newOrder, 0))
+        commitDataList.append(CommitData(product, 0))
 
         # 事务提交
         try:
@@ -415,21 +494,15 @@ class DRApi(object):
 
     @staticmethod
     def View_Image(request):
-        imagename = request.GET.get('imagename')
-        type = int(request.GET.get('type'))
-
+        try:
+            imagename = request.GET.get('imagename')
+        except:
+            loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20001, "Result": None})
+            return HttpResponse(loginResut)
         #
         imageFilePath = None
-        if type == 0: # 主logo
-            imageFilePath = os.path.join(STATIC_ROOT, "%s"%imagename)
-        elif type == 1: # 厂商
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"factory"), "%s.jpg" % imagename)
-        elif type == 2: # 厂商
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"expert"), "%s.jpg" % imagename)
-        elif type == 3:
-            imageFilePath = os.path.join(os.path.join(STATIC_ROOT, "Images"), imagename)
-        if not imageFilePath:
-            return HttpResponse()
+
+        imageFilePath = os.path.join(os.path.join(STATIC_ROOT,"ProductImage"), "%s" % imagename)
 
         image_data = None
         try:

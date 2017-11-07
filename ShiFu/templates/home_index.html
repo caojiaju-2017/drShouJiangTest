@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title> 产品中心 </title>
+  <meta name="Generator" content="EditPlus" />
+  <meta name="Author" content="" />
+  <meta name="Keywords" content="" />
+  <meta name="Description" content="" />
+  <link rel="stylesheet" type="text/css" href="/static/css/main/menu.css" media="all" />
+
+         <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/utils.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/weixin_login.js"> </script>
+    <script src="/static/js/main/home_index.js"> </script>
+ </head>
+ <body onload="$.initSize()" onresize="$.initSize()">
+
+
+ <!--top-->
+<!--<header class="text-center">TOP</header>-->
+    <div id="home_content" style="width: 100%;background-color: #EA5504;height: 400px">
+        <div style="width: 100%;color: #EA5504">
+            <img id="loopImage" src="/static/Images/banner1.jpg"  data-imgname="banner1" style="width: 100%;height: 400px" alt="">
+
+            <!--<div style="width: 100%;height: 240px;text-align: center;margin-top: 20px">-->
+                <!--<div style="width: 30%;height: 240px;float: left;margin-left: 4%">-->
+                    <!--<img src="/static/Images/browser1.jpg" style="width: 160px;height: 160px" alt="">-->
+                    <!--<div style="font-size: 2.0em;color: #666666">服务预约</div>-->
+                <!--</div>-->
+
+                <!--<div style="width: 30%;height: 240px;text-align: center;float: left">-->
+                    <!--<img src="/static/Images/browser2.jpg" style="width: 160px;height: 160px" alt="">-->
+                    <!--<div style="font-size: 2.0em;color: #666666">培训报名</div>-->
+                <!--</div>-->
+
+                <!--<div style="width: 30%;height: 240px;text-align: center;float: left">-->
+                    <!--<img src="/static/Images/browser3.jpg" style="width: 160px;height: 160px" alt="">-->
+                    <!--<div style="font-size: 2.0em;color: #666666">清洗预约</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div style="width: 100%;height: 230px;color: #EA5504">-->
+                <!--<img src="/static/Images/middle_banner.jpg" style="width: 100%;height: 230px" alt="">-->
+            <!--</div>-->
+
+            <div style="width: 100%;height: 100px;line-height:100px;text-align: center;font-size: 3em;color: #606060">
+                产品清单
+            </div>
+            <div style="width: 100%;height: 20px; background-color: #EA5504;margin-top: 5px"></div>
+
+            <div style="width: 100%;" id="data_container"></div>
+            <div style="width: 100%;height: 150px;"></div>
+        </div>
+
+    </div>
+         <div id="search_content"style="visibility: hidden;width: 100%;background-color: #EA5504"></div>
+    <!--content-->
+    <div id="my_content">
+    <div class="user_div2">
+        <img src="/static/Images/user_head.png" class="user_head2">
+
+        <div class="user_detail2">
+            <div style="font-size: 3em;color: white" id="uName">曹家驹</div>
+            <div style="font-size: 2.5em;color: white;margin-top: 2pc;cursor:pointer;" id="phoneBind">绑定手机</div>
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv2"></div>
+
+
+    <!--订单中心-->
+    <div class="order_div2">
+        <div style="margin-left: 5%;padding-top: 25px;font-size: 3.0em;height: 100px">订单中心</div>
+        <div class="seperatoLine2"></div>
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_qx_orders.html'">
+            <img class="itemLogo2" src="/static/Images/qingxi.png">
+            <div class="itemTitle2">清洗订单</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+        <div class="seperatoLine2"></div>
+
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_wx_orders.html'">
+            <img class="itemLogo2" src="/static/Images/weixiu.png">
+            <div class="itemTitle2">维修订单</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+
+        <div class="seperatoLine2"></div>
+
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_aj_orders.html'">
+            <img class="itemLogo2" src="/static/Images/weixiu.png">
+            <div class="itemTitle2">安检订单</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+        <div class="seperatoLine2"></div>
+
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_gdqx_orders.html'">
+            <img class="itemLogo2" src="/static/Images/weixiu.png">
+            <div class="itemTitle2">管道清洗订单</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv2"></div>
+
+    <!--评论与优惠券-->
+    <div class="remarkTitckets2">
+        <!--<div class="item_function"onclick="javascrtpt:window.location.href='./user_remarks.html'">-->
+            <!--<img class="itemLogo" src="/static/Images/setup.png">-->
+            <!--<div class="itemTitle">我的评论</div>-->
+            <!--<img class="right_arrow" src="/static/Images/right.png">-->
+        <!--</div>-->
+        <!--<div class="seperatoLine"></div>-->
+
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_tickets.html'">
+            <img class="itemLogo2" src="/static/Images/youhuijuan.png">
+            <div class="itemTitle2">我的优惠券</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv2"></div>
+    <!--地址管理-->
+
+    <div>
+        <div class="item_function2" onclick="javascrtpt:window.location.href='./user_addresss.html'">
+            <img class="itemLogo2" src="/static/Images/dizhi.png">
+            <div class="itemTitle2">地址管理</div>
+            <img class="right_arrow2" src="/static/Images/right.png">
+        </div>
+    </div>
+    <!--粗分割div-->
+    <div class="seperatorDiv2"></div>
+
+    </div>
+
+
+    <!--bottom-->
+    <div id="menu" class="menu">
+        <div id="one" class="subMenu text-center" data-src="charger.html">
+            <img class="menu_img" data-imgname="home" src="/static/Images/main/home.png" />
+            <div class="menu_name">首页</div>
+        </div>
+        <div id="two" class="subMenu text-center">
+            <img class="menu_img" data-imgname="search" src="/static/Images/main/search.png"/>
+            <div class="menu_name">发现</div>
+        </div>
+        <div id="three" class="subMenu text-center" data-src="personal.html">
+            <img class="menu_img" data-imgname="my" src="/static/Images/main/my.png"/>
+            <div class="menu_name">我的</div>
+        </div>
+    </div>
+
+ </body>
+
+</html>
+
+
+                <!--<div class="item_function">-->
+                    <!--<div style="width: 220px;float: left">-->
+                        <!--<img class="itemLogo" src="/static/Images/example1.jpg">-->
+                    <!--</div>-->
+                    <!--<div style="width: 70%;float: left">-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.7em;color:#000">挂式空调深度清洗</div>-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.0em;color: #666666">油烟机长时间使用，大量油污会附着油烟机内部...</div>-->
+                    <!--</div>-->
+                    <!--<div style="margin-top: 10px">-->
+                        <!--<div style="font-size: 2.4em;float: left;margin-left: 10px">¥128元</div>-->
+                        <!--<div style="font-size: 2.4em;float: right;margin-left: 10px;border-radius: 10px;-->
+                        <!--text-align:center;padding-top:10px;width: 140px;height: 80px;margin-right: 20px;-->
+                        <!--background-color: #EA5504;color: white" onclick="$.openProduct('aaa')">预约</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="seperatoLine"></div>;-->
+
+                                <!--<div class="item_function">-->
+                    <!--<div style="width: 220px;float: left">-->
+                        <!--<img class="itemLogo" src="/static/Images/example1.jpg">-->
+                    <!--</div>-->
+                    <!--<div style="width: 70%;float: left">-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.7em;color:#000">挂式空调深度清洗</div>-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.0em;color: #666666">油烟机长时间使用，大量油污会附着油烟机内部...</div>-->
+                    <!--</div>-->
+                    <!--<div style="margin-top: 10px">-->
+                        <!--<div style="font-size: 2.4em;float: left;margin-left: 10px">¥128元</div>-->
+                        <!--<div style="font-size: 2.4em;float: right;margin-left: 10px;border-radius: 10px;text-align:center;-->
+                        <!--padding-top:10px;width: 140px;height: 80px;margin-right: 20px;background-color: #EA5504;color: white"-->
+                         <!--onclick="$.openProduct('aaa')">预约</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="seperatoLine"></div>;-->
+
+                                <!--<div class="item_function">-->
+                    <!--<div style="width: 220px;float: left">-->
+                        <!--<img class="itemLogo" src="/static/Images/example1.jpg">-->
+                    <!--</div>-->
+                    <!--<div style="width: 70%;float: left">-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.7em;color:#000">挂式空调深度清洗</div>-->
+                        <!--<div style="margin-top: 10px;padding-left: 10px;font-size: 2.0em;color: #666666">油烟机长时间使用，大量油污会附着油烟机内部...</div>-->
+                    <!--</div>-->
+                    <!--<div style="margin-top: 10px">-->
+                        <!--<div style="font-size: 2.4em;float: left;margin-left: 10px">¥128元</div>-->
+                        <!--<div style="font-size: 2.4em;float: right;margin-left: 10px;border-radius: 10px;text-align:center;-->
+                        <!--padding-top:10px;width: 140px;height: 80px;margin-right: 20px;background-color: #EA5504;color: white"-->
+                         <!--onclick="$.openProduct('aaa')">预约</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="seperatoLine"></div>;-->

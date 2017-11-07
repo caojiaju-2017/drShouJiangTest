@@ -141,6 +141,7 @@ $.extend({
                 {
                     //
                     location.replace("/org_main.html");
+                    // location=document.referrer;
                 }
                 else
                 {

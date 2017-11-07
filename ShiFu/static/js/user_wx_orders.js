@@ -199,7 +199,7 @@ get_current_query:function () {
 				},
 
     viewOrder:function (cancelOrder) {
-        location.href="/order_detail_info.html?code=" + cancelOrder;
+        location.href="/order_detail_info.html?ccode=" + cancelOrder;
     },
     // cancelOrder:function (cancelOrder) {
     //     alert(cancelOrder);

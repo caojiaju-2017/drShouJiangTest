@@ -12,25 +12,75 @@
     <script src="/static/js/weixin_login.js"> </script>
     <script src="/static/js/org_main.js"> </script>
 
-    <div id="add_button" onclick="javascrtpt:window.location.href='./add_emplyee.html'">
-    添加
-    </div>
+    <!--<div id="add_button" onclick="javascrtpt:window.location.href='./add_emplyee.html'">-->
+    <!--添加-->
+    <!--</div>-->
 
     <div class="home_card">
         <img src="/static/Images/default_head2.png" class="login_head">
 
         <div class="login_info_div">
-            <div style="width: 100%;height:120px;line-height: 160px">账户姓名：{{Org_Name}}</div>
-            <div style="width: 100%;height:100px;line-height: 40px">手机号码：{{Org_Phone}}</div>
+            <div style="width: 100%;height:120px;line-height: 160px;color: white">账户姓名：{{Org_Name}}</div>
+            <div style="width: 100%;height:100px;line-height: 40px;color: white">手机号码：{{Org_Phone}}</div>
         </div>
 
-        <div class="operator_info_div">
-            <img src="/static/Images/myorders.png" style="width: 90px;height: 90px;margin-top: 5px" onclick="$.loadDatas(0)" />
-            <img src="/static/Images/myemplyees.png" style="width: 90px;height: 90px" onclick="$.loadDatas(1)"/>
-        </div>
+        <!--<div class="operator_info_div">-->
+            <!--<img src="/static/Images/myorders.png" style="width: 90px;height: 90px;margin-top: 5px" onclick="$.loadDatas(0)" />-->
+            <!--<img src="/static/Images/myemplyees.png" style="width: 90px;height: 90px" onclick="$.loadDatas(1)"/>-->
+        <!--</div>-->
     </div>
     <div class="topSep"></div>
-    <div class="order_div" id="qx_order_list"></div>
+            <div class="item_function" onclick="javascrtpt:window.location.href='./org_qx_orders.html'">
+            <img class="itemLogo" src="/static/Images/qingxi.png">
+            <div class="itemTitle">家电清洗订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+        <div class="seperatoLine"></div>
+
+        <div class="item_function" onclick="javascrtpt:window.location.href='./org_wx_orders.html'">
+            <img class="itemLogo" src="/static/Images/weixiu.png">
+            <div class="itemTitle">家电维修订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+
+            <div class="seperatoLine"></div>
+
+        <div class="item_function" onclick="javascrtpt:window.location.href='./org_aj_orders.html'">
+            <img class="itemLogo" src="/static/Images/weixiu.png">
+            <div class="itemTitle">家电安检订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+
+            <div class="seperatoLine"></div>
+
+        <div class="item_function" onclick="javascrtpt:window.location.href='./org_gdqx_orders.html'">
+            <img class="itemLogo" src="/static/Images/weixiu.png">
+            <div class="itemTitle">管道清洗订单</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+
+    <!--评论与优惠券-->
+    <div class="remarkTitckets">
+        <div class="item_function" onclick="javascrtpt:window.location.href='./org_emplyees.html'">
+            <img class="itemLogo" src="/static/Images/emps.png">
+            <div class="itemTitle">我的员工</div>
+            <img class="right_arrow" src="/static/Images/right.png">
+        </div>
+    </div>
+
+    <!--粗分割div-->
+    <div class="seperatorDiv"></div>
+
+    <div class="exit_login" onclick="$.exitLogin()">
+            退出登录
+    </div>
+
+    <!--<div class="order_div" id="qx_order_list"></div>-->
+
 
 </body>
 </html>

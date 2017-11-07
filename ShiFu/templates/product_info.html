@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/css/product_info.css">
+        <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
+        <script src="/static/js/cookie.js"> </script>
+        <script type="text/javascript" src="/static/js/product_info.js"></script>
+    </head>
+    <body>
+
+        <div id="scroll">
+            <!--<div class="titleLabel">aaaaaaa</div>-->
+
+             <ul>
+                 <li style="background-image: url('/static/Images/p1.jpg');display:block;background-repeat: no-repeat;background-size: 100%;"></li>
+                 <li style="background-image: url('/static/Images/p2.jpg');background-repeat: no-repeat;background-size: 100%;"></li>
+                 <li style="background-image: url('/static/Images/p3.jpg');background-repeat: no-repeat;background-size: 100%;"></li>
+                 <li style="background-image: url('/static/Images/p4.jpg');background-repeat: no-repeat;background-size: 100%;"></li>
+             </ul>
+         </div>
+
+        <!--分隔条-->
+        <!--<div style="width: 100%;height: 20px; background-color: #CCCCCC;margin-top: 5px"></div>-->
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:140px;float: left;font-size: 2.7em"><strong>基本信息</strong></div>
+        </div>
+
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em">类别&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp：</div>
+            <div style="float: left;font-size: 2em;text-align: left;margin-left: 20px;line-height:100px;font-size: 2.5em;color: #666666">   {{Product_Type}}    </div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em">服务价格：</div>
+            <div style="float: left;font-size: 2em;text-align: left;margin-left: 20px;line-height:100px;color: #EA5504;font-size: 2.5em">   ￥{{Product_Price}}    </div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em">服务时间：</div>
+            <div style="float: left;font-size: 2em;text-align: left;margin-left: 20px;line-height:100px;color: #EA5504;font-size: 2.5em;color: #666666">   {{Service_Time}}    </div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em">点击量 &nbsp &nbsp     ：</div>
+            <div style="float: left;font-size: 2em;text-align: left;margin-left: 20px;line-height:100px;color: #EA5504;font-size: 2.5em;color: #666666">  {{Click_Count}}   </div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em">预约量&nbsp&nbsp&nbsp&nbsp：</div>
+            <div style="float: left;font-size: 2em;text-align: left;margin-left: 20px;line-height:100px;color: #EA5504;font-size: 2.5em;color: #666666">  {{Sale_Count}}   </div>
+        </div>
+
+        <!--分隔条-->
+        <div style="width: 100%;height: 20px; background-color: #CCCCCC;margin-top: 5px"></div>
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.5em"><strong>服务介绍</strong></div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+        <div style="width: 100%;font-size: 2.4em;padding: 10px;font-size: 2.4em;color: #666666">{{Product_Introduce}}</div>
+
+        <!--分隔条-->
+        <div style="width: 100%;height: 20px; background-color: #CCCCCC;margin-top: 5px"></div>
+
+        <div style="width: 98%;height: 100px;text-align: center;margin-left: 20px">
+            <div style="height: 100px;line-height:100px;float: left;font-size: 2.7em"><strong>服务详情</strong></div>
+        </div>
+        <!--分隔线-->
+        <div class="seperatoLine"></div>
+
+        <div style="width: 100%;text-align: center">
+            <img src="{{Product_Detail_Image}}" style="width: 80%;margin-top: 20px">
+        </div>
+        <!--分隔条-->
+        <div style="width: 100%;height: 40px; margin-top: 5px"></div>
+
+        <div id="start_order" onclick="$.startOrder('{{Product_Code}}','{{Product_Name}}','{{Product_Price}}')">
+        开始预约
+        </div>
+    </body>
+
+
+
+
+</html>

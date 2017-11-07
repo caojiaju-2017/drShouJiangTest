@@ -33,7 +33,7 @@ window.onload=function()
 
 $(document).ready(function()
 {
-    OpenId = $.cookie('WX_OpenId');
+
     // 查询参与投票的品牌
     $.get_current_query();
 
@@ -205,7 +205,7 @@ $.extend({
 				},
 
     viewOrder:function (cancelOrder) {
-        location.href="/order_detail_info.html?code=" + cancelOrder;
+        location.href="/order_detail_info.html?ccode=" + cancelOrder;
     },
     // cancelOrder:function (cancelOrder) {
     //     alert(cancelOrder);

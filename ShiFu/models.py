@@ -51,7 +51,7 @@ class SjCustomOrders(models.Model):
     odatetime = models.CharField(db_column='ODateTime', max_length=20, blank=True, null=True)  # Field name made lowercase.
     ccode = models.CharField(db_column='CCode', max_length=32, blank=True, null=True)  # Field name made lowercase.
     price = models.TextField(db_column='Price', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
-    addrcode = models.CharField(db_column='AddrCode', max_length=32, blank=True, null=True)  # Field name made lowercase.
+    # addrcode = models.CharField(db_column='AddrCode', max_length=32, blank=True, null=True)  # Field name made lowercase.
     type = models.IntegerField(db_column='Type', blank=True, null=True)  # Field name made lowercase.
     srvcode = models.CharField(db_column='SrvCode', max_length=32, blank=True, null=True)  # Field name made lowercase.
     ocode = models.CharField(db_column='OCode', max_length=32, blank=True, null=True)  # Field name made lowercase.
@@ -59,6 +59,16 @@ class SjCustomOrders(models.Model):
     lasttime = models.CharField(db_column='LastTime', max_length=20, blank=True, null=True)  # Field name made lowercase.
     info = models.CharField(db_column='Info', max_length=200, blank=True, null=True)  # Field name made lowercase.
     ecode = models.CharField(db_column='ECode', max_length=32, blank=True, null=True)  # Field name made lowercase.
+
+    contactname = models.CharField(db_column='ContactName', max_length=32, blank=True, null=True)  # Field name made lowercase.
+    address = models.CharField(db_column='Address', max_length=32, blank=True, null=True)  # Field name made lowercase.
+    contactphone = models.CharField(db_column='ContactPhone', max_length=32, blank=True, null=True)  # Field name made lowercase.
+    count = models.IntegerField(db_column='Count', blank=True, null=True)  # Field name made lowercase.
+    extern1 = models.CharField(db_column='Extern1', max_length=200, blank=True, null=True)  # Field name made lowercase.
+    extern2 = models.CharField(db_column='Extern2', max_length=200, blank=True, null=True)  # Field name made lowercase.
+    extern3 = models.CharField(db_column='Extern3', max_length=200, blank=True, null=True)  # Field name made lowercase.
+
+    servicetime = models.CharField(db_column='ServiceTime', max_length=200, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -159,18 +169,29 @@ class SjQxPack(models.Model):
         db_table = 'sj_qx_pack'
 
 
-class SjQxServices(models.Model):
+class SjServices(models.Model):
     id = models.IntegerField(db_column='ID',  primary_key=True)  # Field name made lowercase.
     code = models.CharField(db_column='Code', unique=True, max_length=32, blank=True, null=True)  # Field name made lowercase.
     name = models.CharField(db_column='Name', max_length=64, blank=True, null=True)  # Field name made lowercase.
-    imgname = models.CharField(db_column='ImgName', max_length=64, blank=True, null=True)  # Field name made lowercase.
-    city = models.CharField(db_column='City', max_length=64, blank=True, null=True)  # Field name made lowercase.
     price = models.TextField(db_column='Price', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
     origprice = models.TextField(db_column='OrigPrice', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
     state = models.IntegerField(db_column='State', blank=True, null=True)  # Field name made lowercase.
+
+    imgname1 = models.CharField(db_column='ImgName1', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    imgname2 = models.CharField(db_column='ImgName2', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    imgname3 = models.CharField(db_column='ImgName3', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    detailimage = models.CharField(db_column='DetailImage', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=2000, blank=True, null=True)  # Field name made lowercase.
+    servicetime = models.CharField(db_column='ServiceTime', max_length=64, blank=True, null=True)  # Field name made lowercase.
+
+    bookcount = models.IntegerField(db_column='BookCount', blank=True, null=True)  # Field name made lowercase.
+    viewcount = models.IntegerField(db_column='ViewCount', blank=True, null=True)  # Field name made lowercase.
+    servicetype = models.IntegerField(db_column='ServiceType', blank=True, null=True)  # Field name made lowercase.
+
+
     class Meta:
         managed = False
-        db_table = 'sj_qx_services'
+        db_table = 'sj_services'
 
 
 class SjSrvOrg(models.Model):

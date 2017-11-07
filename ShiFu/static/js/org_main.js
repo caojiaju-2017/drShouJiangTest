@@ -73,39 +73,39 @@ $(document).ready(function()
 {
     Org_Login_Phone = $.cookie('Org_Login_Phone');
     // 查询参与投票的品牌
-    if (currentLoadType == 0)
-    {
-        $("#add_button").hide();
-        $.get_current_query();
-    }
-    else
-    {
-        $("#add_button").show();
-        $.get_emplyee_query();
-    }
+    // if (currentLoadType == 0)
+    // {
+    //     $("#add_button").hide();
+    //     $.get_current_query();
+    // }
+    // else
+    // {
+    //     $("#add_button").show();
+    //     $.get_emplyee_query();
+    // }
 
 
-    $(window).scroll(function(){
-        var srollPos = $(window).scrollTop();
-        var documentHd = $(document).height();
-        var winHd = $(window).height() ;
-        totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
-
-        if (srollPos + winHd > documentHd*0.9 && !isFinishLoad)
-        {
-             // 加载数据
-            currentPageIndex = currentPageIndex + 1;
-            if (currentLoadType == 0)
-            {
-                $.get_current_query();
-            }
-            else
-            {
-                //$.get_emplyee_query();
-            }
-        }
-
-        });
+    // $(window).scroll(function(){
+    //     var srollPos = $(window).scrollTop();
+    //     var documentHd = $(document).height();
+    //     var winHd = $(window).height() ;
+    //     totalheight = parseFloat($(window).height()) + parseFloat(srollPos);
+    //
+    //     if (srollPos + winHd > documentHd*0.9 && !isFinishLoad)
+    //     {
+    //          // 加载数据
+    //         currentPageIndex = currentPageIndex + 1;
+    //         if (currentLoadType == 0)
+    //         {
+    //             $.get_current_query();
+    //         }
+    //         else
+    //         {
+    //             //$.get_emplyee_query();
+    //         }
+    //     }
+    //
+    //     });
 });
 // 自定义函数
 $.extend({
@@ -372,5 +372,11 @@ $.extend({
         }
     },
 
+    exitLogin:function () {
+            $.cookie('Org_Login_Phone',null);
+            $.cookie('Org_Login_Date',null);
+
+            location.replace("/login_org.html");
+    }
 
 });

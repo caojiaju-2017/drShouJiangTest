@@ -149,8 +149,13 @@ class DRPublicApi(object):
 
     @staticmethod
     def Get_QX_Product(request):
+        Type = int(request.GET.get('Type'.lower()))
 
-        results = SjQxServices.objects.filter(state= 1).order_by("name")
+        results = SjServices.objects.filter(state= 1).order_by("name")
+
+        if Type != 9:
+            results = results.filter(servicetype = Type)
+
 
         if not results:
             loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": None})
@@ -161,12 +166,38 @@ class DRPublicApi(object):
             oneRecord = {}
             oneRecord["Code"] = one.code
             oneRecord['Name'] = one.name
-            oneRecord['ImgName'] = one.imgname
-            oneRecord['City'] = one.city
             oneRecord['Price'] = one.price
+
             oneRecord['OrigPrice'] = one.origprice
+
+            if one.imgname1 and len(one.imgname1) > 0:
+                oneRecord['ImgName1'] = "/static/ProductImage/" + one.imgname1
+            else:
+                oneRecord['ImgName1'] = None
+
+            if one.imgname2 and len(one.imgname2) > 0:
+                oneRecord['ImgName2'] = "/static/ProductImage/" + one.imgname2
+            else:
+                oneRecord['ImgName2'] = None
+
+            if one.imgname3 and len(one.imgname3) > 0:
+                oneRecord['ImgName3'] = "/static/ProductImage/" + one.imgname3
+            else:
+                oneRecord['ImgName3'] = None
+
+            if one.detailimage and len(one.detailimage) > 0:
+                oneRecord['DetailImage'] = "/static/ProductImage/" + one.detailimage
+            else:
+                oneRecord['DetailImage'] = None
+
+            oneRecord['Info'] = one.info
+            oneRecord['BookCount'] = one.bookcount
+            oneRecord['ViewCount'] = one.viewcount
+            oneRecord['ServiceTime'] = one.servicetime
+            oneRecord['ServiceType'] = one.servicetype
             rtnResult.append(oneRecord)
 
+        print rtnResult
         loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnResult})
         return HttpResponse(loginResut)
 
@@ -174,13 +205,20 @@ class DRPublicApi(object):
     def Get_Tickets(request):
         # 提取post数据
         print request.GET
-        CCode = request.GET.get('CCode'.lower())
-        OCode = request.GET.get('OCode'.lower())
 
-        State = int(request.GET.get('State'.lower()))
-        PageSize = int(request.GET.get('PageSize'.lower()))
-        PageIndex = int(request.GET.get('PageIndex'.lower()))
+        try:
+            CCode = request.GET.get('CCode'.lower())
+            OCode = request.GET.get('OCode'.lower())
+        except:
+            pass
 
+        try:
+            State = int(request.GET.get('State'.lower()))
+            PageSize = int(request.GET.get('PageSize'.lower()))
+            PageIndex = int(request.GET.get('PageIndex'.lower()))
+        except:
+            loginResut = json.dumps({"ErrorInfo": "参数错误", "ErrorId": 20006, "Result": None})
+            return HttpResponse(loginResut)
 
         if CCode:
             results = SjTickets.objects.filter(ccode=CCode).order_by("state")
@@ -260,13 +298,15 @@ class DRPublicApi(object):
         OCode = request.GET.get('OCode'.lower())
         ECode = request.GET.get('ECode'.lower())
 
-
+        results = None
         if CCode:
             results = SjCustomOrders.objects.filter(ccode = CCode).order_by("state").order_by("state")
         elif OCode:
             results = SjCustomOrders.objects.filter(ocode=OCode).order_by("state")
         elif ECode:
             results = SjCustomOrders.objects.filter(ecode=ECode).order_by("state")
+        else:
+            results = SjCustomOrders.objects.order_by("state")
 
         if Type != 9:
             results = results.filter(type = Type)
@@ -275,6 +315,8 @@ class DRPublicApi(object):
             results = results.filter(Q(state=1) | Q(state=2))
         elif State == 1:
             results = results.filter(Q(state=3) | Q(state=9))
+        elif State == 8:
+            pass
         elif State == 9:
             results = results.filter(state=9)
         else:
@@ -297,7 +339,6 @@ class DRPublicApi(object):
             oneRecord['ODateTime'] = one.odatetime
             oneRecord['CCode'] = one.ccode
             oneRecord['Price'] = one.price
-            oneRecord['AddrCode'] = one.addrcode
             oneRecord['Type'] = one.type
             oneRecord['SrvCode'] = one.srvcode
             oneRecord['OCode'] = one.ocode
@@ -305,6 +346,15 @@ class DRPublicApi(object):
             oneRecord['LastTime'] = one.lasttime
             oneRecord['Info'] = one.info
             oneRecord['ECode'] = one.ecode
+
+            oneRecord['ContactName'] = one.contactname
+            oneRecord['Address'] = one.address
+            oneRecord['ContactPhone'] = one.contactphone
+            oneRecord['Count'] = one.count
+            oneRecord['Extern1'] = one.extern1
+            oneRecord['Extern2'] = one.extern2
+            oneRecord['Extern3'] = one.extern3
+            oneRecord['ServiceTime'] = one.servicetime
 
             rtnResult.append(oneRecord)
         rtnDict["MaxCount"] = len(results)

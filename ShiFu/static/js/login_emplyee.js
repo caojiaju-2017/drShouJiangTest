@@ -4,6 +4,8 @@
 
 window.onload=function()
 {
+    console.log("aaaa");
+
     var screenHeight = document.documentElement.clientHeight;
     // alert(screenHeight);
     //
@@ -129,7 +131,7 @@ $.extend({
                     $.cookie("Emplyee_Login_Phone",accountCode);
                     $.cookie("Emplyee_Login_Date",$.getNowFormatDate());
                     // location.href="/emplyee_main.html";
-                    location.replace("/emplyee_main.html?code=" + Emp_Login_Phone);
+                    location.replace("/emplyee_main.html?code=" + accountCode);
 
                 }
                 else

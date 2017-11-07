@@ -6,6 +6,7 @@ from django.http import  HttpResponse
 import json,uuid,time,base64,re
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.clickjacking import xframe_options_exempt
 import qrcode
 from HsShareData import *
 
@@ -75,6 +76,33 @@ class WebCenter(object):
         # config = DrConfig.objects.first()
         renterDict = {}
         return render(request, 'user_qx_orders.html',renterDict )
+
+    @staticmethod
+    @csrf_exempt
+    def goUserAJOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        # config = DrConfig.objects.first()
+        renterDict = {}
+        return render(request, 'user_aj_orders.html', renterDict)
+
+    @staticmethod
+    @csrf_exempt
+    def goUserGDQXOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        # config = DrConfig.objects.first()
+        renterDict = {}
+        return render(request, 'user_gdqx_orders.html', renterDict)
+
 
     @staticmethod
     @csrf_exempt
@@ -221,9 +249,57 @@ class WebCenter(object):
         renterDict = {}
         return render(request, 'add_emplyee.html', renterDict)
 
+
+
+
+    @staticmethod
+    @csrf_exempt
+    def viewProduct(request):
+        Code = request.GET.get('code')
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        # config = SjConfig.objects.filter(ckey="Help_Line").first()
+        product = SjServices.objects.filter(code=Code,state=1).first()
+
+        if not product:
+            return HttpResponse("产品数据异常")
+
+        renterDict={}
+        if product.servicetype == 0:
+            renterDict["Product_Type"] = "家电清洗"
+        elif product.servicetype == 1:
+            renterDict["Product_Type"] = "家电维修"
+        elif product.servicetype == 2:
+            renterDict["Product_Type"] = "家电安检"
+        elif product.servicetype == 3:
+            renterDict["Product_Type"] = "管道清洗"
+
+        renterDict["Product_Price"] = product.price
+        renterDict["Service_Time"] = product.servicetime
+        renterDict["Click_Count"] = product.viewcount
+        renterDict["Sale_Count"] = product.bookcount
+        renterDict["Product_Introduce"] = product.info
+        renterDict["Product_Detail_Image"] = "/static/ProductImage/" + product.detailimage
+
+        renterDict["Product_Code"] = product.code
+        renterDict["Product_Name"] = product.name
+        renterDict["Product_Price"] = product.price
+        return render(request, 'product_info.html', renterDict)
+
     @staticmethod
     @csrf_exempt
     def startOrder(request):
+        Code = request.GET.get('code')
+        UCode = request.GET.get('ucode')
+        Name = request.GET.get('name')
+        Price = float(request.GET.get('price'))
+
+        print Code , Name,Price
+
         if not HsShareData.IsDebug and not checkMobile(request):
             url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
             img = qrcode.make(url)
@@ -232,17 +308,34 @@ class WebCenter(object):
 
         config = SjConfig.objects.filter(ckey="Help_Line").first()
         renterDict = {}
-        if config:
-            renterDict['Help_Line'] = config.cvalue
+        renterDict["Product_Code"] = Code
+        renterDict["Product_Name"] = Name
+        renterDict["Product_Price"] = Price
 
-        citys = {}
-        citys["chengdu"] = "成都市"
-        citys["beijing"] = "北京市"
-        citys["quanzhou"] = "泉州市"
-        citys["guangzhou"] = "广州市"
+        # 查询用户地址列表
+        address = SjCustomAddress.objects.filter(ccode = UCode)
+        empDict={}
+        for one in address:
+            oneAddr = {}
+            oneAddr["Name"] = one.name
+            oneAddr["Phone"] = one.phone
+            oneAddr["Address"] = one.address
 
+            empDict[one.code] = oneAddr
 
-        renterDict["City_Datas"] =citys
+        renterDict["User_Address"] = empDict
+
+        # 服务商选择
+        orgs = SjSrvOrg.objects.filter(state=1)
+        orgDict={}
+        for oneOrg in orgs:
+            if oneOrg.phone == "admin":
+                continue
+            print oneOrg.code
+            orgDict[oneOrg.code] = oneOrg.name
+
+        renterDict["Org_Lists"] = orgDict
+        # Org_Lists
         return render(request, 'begin_order.html', renterDict)
 
     @staticmethod
@@ -255,7 +348,20 @@ class WebCenter(object):
             return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
 
         renterDict = {}
-        Code = request.GET.get('code')
+        Code = None
+        fromType = 0
+        try:
+            Code = request.GET.get('code')
+            fromType = 0
+        except:
+            pass
+
+        try:
+            if not Code:
+                Code = request.GET.get('ccode')
+                fromType = 1
+        except:
+            pass
 
         print "订单号码：", Code
 
@@ -265,16 +371,16 @@ class WebCenter(object):
             loginResut = json.dumps({"ErrorInfo": "订单数据异常", "ErrorId": 99999, "Result": None})
             return HttpResponse(loginResut)
 
-        addressInfo = None
-        if customOrder.addrcode:
-            addressInfo = SjCustomAddress.objects.filter(code=customOrder.addrcode).first()
+        # addressInfo = None
+        # # if customOrder.addrcode:
+        # addressInfo = SjCustomAddress.objects.filter(code=customOrder.addrcode).first()
 
         srvData = None
-        if customOrder.type == 0 and customOrder.srvcode :
-            srvData = SjQxServices.objects.filter(code=customOrder.srvcode).first()
+        # if customOrder.type == 0 and customOrder.srvcode :
+        srvData = SjServices.objects.filter(code=customOrder.srvcode).first()
 
-        if customOrder.type == 1 and customOrder.srvcode :
-            srvData = SjWxServices.objects.filter(code=customOrder.srvcode).first()
+        # if customOrder.type == 1 and customOrder.srvcode :
+        #     srvData = SjWxServices.objects.filter(code=customOrder.srvcode).first()
 
         orgData = None
         if customOrder.ocode:
@@ -304,6 +410,8 @@ class WebCenter(object):
             # TerminalShow = False
             renterDict["showEmplyee"] = "disabled"
             renterDict["PaiDanButton"] = ""
+            if fromType == 1:
+                renterDict["PaiDanButton"] = "disabled"
             renterDict["TerminalButton"] = ""
             renterDict["FinishButton"] = "disabled"
             renterDict["TerminalShow"] = ""
@@ -321,6 +429,9 @@ class WebCenter(object):
             renterDict["PaiDanButton"] = "disabled"
             renterDict["TerminalButton"] = ""
             renterDict["FinishButton"] = ""
+            if fromType == 1:
+                renterDict["TerminalButton"] = "disabled"
+                renterDict["FinishButton"] = "disabled"
             renterDict["TerminalShow"] = ""
             renterDict["WorkSpace"] = ""
             renterDict["WorkSpace1"] = "disabled"
@@ -366,15 +477,15 @@ class WebCenter(object):
             renterDict["Order_Code"] = Code
             renterDict["Order_State"] = StateInfo
 
-            if addressInfo:
-                renterDict["Custom_Name"] = addressInfo.name
-                renterDict["Custom_Phone"] = addressInfo.phone
-                renterDict["Custom_Address"] = addressInfo.address
+            # if addressInfo:
+            renterDict["Custom_Name"] = customOrder.contactname
+            renterDict["Custom_Phone"] = customOrder.contactphone
+            renterDict["Custom_Address"] = customOrder.address
 
-            if weixiuData:
-                renterDict["Other_Info"] = weixiuData.devtype + weixiuData.setupdate + weixiuData.info
-            else:
-                renterDict["Other_Info"] = "无"
+            # if weixiuData:
+            renterDict["Other_Info"] = customOrder.extern1
+            # else:
+            #     renterDict["Other_Info"] = "无"
 
             if customOrder.state == 9 or customOrder.state == 3:
                 renterDict["Terminal_Info"] = customOrder.info
@@ -383,12 +494,12 @@ class WebCenter(object):
                 renterDict["Emp_Name"] = emplyeeData.name
                 renterDict["Emp_Phone"] = emplyeeData.phone
 
-            if customOrder.type == 0 and srvData:
-                renterDict["Product_Name"] = srvData.name
-                renterDict["Product_Price"] = srvData.price
-            elif customOrder.type == 1 and srvData:
-                renterDict["Product_Name"] = srvData.name
-                renterDict["Product_Price"] = "现场确认"
+            # if customOrder.type == 0 and srvData:
+            renterDict["Product_Name"] = srvData.name
+            renterDict["Product_Price"] = srvData.price
+            # elif customOrder.type == 1 and srvData:
+            #     renterDict["Product_Name"] = srvData.name
+            #     renterDict["Product_Price"] = "现场确认"
             pass
 
         myEmpylees = SjEmplyees.objects.filter(ocode=customOrder.ocode,state=1)
@@ -495,6 +606,143 @@ class WebCenter(object):
         renterDict['Total_Cut'] = 0
         return render(request, 'start_order_qx.html', renterDict)
 
+
+    @staticmethod
+    @csrf_exempt
+    def openHome(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        renterDict = {}
+
+        return render(request, 'home_index.html', renterDict)
+
+    # ======================================服务商页面=======================================================
+    @staticmethod
+    @csrf_exempt
+    def goOrgQXOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './org/org_qx_orders.html', renterDict)
+
+    @staticmethod
+    @csrf_exempt
+    def goOrgWXOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './org/org_wx_orders.html', renterDict)
+
+    @staticmethod
+    @csrf_exempt
+    def goAjOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './org/org_aj_orders.html', renterDict)
+
+    @staticmethod
+    @csrf_exempt
+    def goGDQXOrder(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './org/org_gdqx_orders.html', renterDict)
+
+    @staticmethod
+    @csrf_exempt
+    def goOrgEmplyees(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './org/org_emplyees.html', renterDict)
+
+    # =============================================================================================
+
+
+    # -=======================================
+    @staticmethod
+    @csrf_exempt
+    def goUnFinishOrders(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './emplyee/emplyee_unfinish_orders.html', renterDict)
+    @staticmethod
+    @csrf_exempt
+    def goFinishOrders(request):
+        if not HsShareData.IsDebug and not checkMobile(request):
+            url = "http://" + request.META['HTTP_HOST'] + request.META['PATH_INFO'] + request.META['QUERY_STRING']
+            img = qrcode.make(url)
+            img.save(os.path.join(os.path.join(STATIC_ROOT, "Images"), "erweima_img.png"))
+            return render(request, 'error_notice.html', {"erweima_img": "/static/Images/erweima_img.png"})
+
+        Code = request.GET.get('code')
+        orgData = SjEmplyees.objects.filter(code=Code,state=1).first()
+        renterDict = {}
+        if orgData:
+            renterDict["Emp_Name"] = orgData.name
+            renterDict["Emp_Phone"] = orgData.phone
+        return render(request, './emplyee/emplyee_finish_orders.html', renterDict)
+    # -=======================================
     @staticmethod
     @csrf_exempt
     def goOrderWx(request):
@@ -524,6 +772,25 @@ class WebCenter(object):
         # config = DrConfig.objects.first()
         renterDict = {}
         return render(request, 'index.html', renterDict)
+
+    @xframe_options_exempt
+    @staticmethod
+    @csrf_exempt
+    def upload_file(request):
+        if request.method == "POST":  # 请求方法为POST时，进行处理
+            myFile = request.FILES.get("myfile", None)  # 获取上传的文件，如果没有文件，则默认为None
+            if not myFile:
+                return HttpResponse("no files for upload!")
+
+            imgname = uuid.uuid1().__str__().replace("-", "")
+            destination  = os.path.join(STATIC_ROOT,"ProductImage")
+            destination = open(os.path.join(destination, imgname + ".jpg"), 'wb+')  # 打开特定的文件进行二进制的写操作
+            for chunk in myFile.chunks():  # 分块写入文件
+                destination.write(chunk)
+            destination.close()
+
+
+            return HttpResponse(imgname + ".jpg")
 
 def getPostData(request):
     postDataList = {}

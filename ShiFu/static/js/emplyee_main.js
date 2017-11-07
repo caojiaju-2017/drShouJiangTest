@@ -240,5 +240,11 @@ $.extend({
         $.get_current_query(cancelOrder);
     },
 
+    exitLogin:function () {
+            $.cookie('Emplyee_Login_Phone',null);
+            $.cookie('Emplyee_Login_Date',null);
+
+            location.replace("/login_emplyee.html");
+    }
 
 });

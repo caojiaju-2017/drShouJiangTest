@@ -1,0 +1,246 @@
+* {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 微软雅黑;
+        }
+
+        header {
+            height: 60px;
+            line-height: 60px;
+            width: 100%;
+            color: #fff;
+            font-family: "黑体";
+            font-weight: 200;
+            font-size: 30px;
+            /*背景色渐变*/
+            background: linear-gradient(to bottom right, #F56739, #FB9749);
+            /*background-color: #C0C0C0;*/
+        }
+
+        #my_content {
+            /*background: linear-gradient(to bottom right, #f5f454, #fbd1b7);*/
+			background-color: #f0f0f0;
+        }
+        #home_content {
+            /*background: linear-gradient(to bottom right, #f5f454, #fbd1b7);*/
+			background-color: #f0f0f0;
+        }
+         #search_content {
+            /*background: linear-gradient(to bottom right, #f5f454, #fbd1b7);*/
+			background-color: #f0f0f0;
+        }
+        .menu {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 140px;
+            color: #474747;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .subMenu {
+            width: 33%;
+            float: left;
+            cursor: pointer;
+        }
+
+        .menu_name {
+            height: 30px;
+            width: 100%;
+			font-size: 2em;
+            line-height: 30px;
+			margin-top: 10px;
+        }
+
+        img.menu_img {
+            height: 80px;
+            width: 80px;
+        }
+
+        img {
+            vertical-align: middle;
+            border: 0;
+        }
+
+        .active {
+            color: #FFA129;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+		/*////////////////////////========================/////////////////////*/
+
+.user_div2
+{
+    width:100%;
+    height: 15pc;
+    background-color: #D30710;
+    /*position:absolute; top:250px;*/
+    /*left:550px;*/
+    /*cursor:pointer;*/
+}
+.user_head2
+{
+    width: 10pc;
+    height: 10pc;
+    margin-left: 1pc;
+    margin-top: 2.5pc;
+    float: left;
+}
+.user_detail2
+{
+    float: left;
+    margin-left: 3pc;
+    margin-top: 2.5pc;
+}
+
+.seperatorDiv2
+{
+    height: 1pc;
+    width: 100%;
+}
+.order_div2
+{
+    width: 100%;
+    background-color: white;
+    color: darkred
+}
+.seperatoLine2
+{
+    width: 90%;
+    height: 1px;
+    margin-left: 5%;
+    background-color: #aaaaaa;
+}
+
+.remarkTitckets2
+{
+    width: 100%;
+    height: 8pc;
+    background-color: white;
+}
+.item_function2
+{
+    width: 100%;
+    height:8pc;
+    background-color: white;
+}
+
+.itemLogo2
+{
+    width: 4pc;
+    height:4pc;
+    float: left;
+    margin-top: 2pc;
+    margin-left: 5%;
+    float: left;
+}
+
+.itemTitle2
+{
+    height:1.5pc;
+    font-size: 2.6em;
+    color: #777777;
+    background-color: white;
+    float: left;
+    line-height: 8pc;
+    margin-left: 40px;
+}
+
+.right_arrow2
+{
+    width: 5pc;
+    height:5pc;
+    float: right;
+    margin-right: 5%;
+    margin-top: 1.5pc;
+}
+
+.nav2 {
+    postion:relative;
+    bottom:0px;margin:0px;float:left;width:100%;;height: 150px;margin-left: 0px;margin-right: 0px;
+    margin:0 auto;
+    background:#e0e0e0;
+    position:fixed;
+    color: coral;    bottom:0;
+    font-size: 3em;
+    line-height: 150px;
+    text-align:center;
+}
+
+
+/*==================================*/
+.seperatorDiv
+{
+    height: 1pc;
+    width: 100%;
+}
+.order_div
+{
+    width: 100%;
+    height: 32pc;
+    background-color: white;
+    color: darkred;
+
+}
+.seperatoLine
+{
+    width: 100%;
+    height: 1px;
+    margin-top: 40px;
+    background-color: #3b4246;
+}
+
+.item_function
+{
+    width: 100%;
+    height:220px;
+    background-color: white;
+}
+
+.itemLogo
+{
+    width: 200px;
+    height:200px;;
+    border-radius: 30px;
+    /*float: left;*/
+    margin-top: 20px;
+    margin-left: 5%;
+    float: left;
+}
+
+.itemTitle
+{
+    height:1.5pc;
+    font-size: 2.6em;
+    color: #888888;
+    background-color: white;
+    float: left;
+    position: relative;
+    line-height:12pc;
+    margin-left: 50px;
+}
+
+.order_oper
+{
+    width: 100px;
+    height: 100px;
+    float: right;
+    border-radius: 5px;
+    background-color: #e0e0e005;
+    font-size: 2.5em;
+    text-align: center;
+    border-width: 2px;
+    border-style:solid;
+    margin-top: 40px;
+    margin-right: 50px;
+    border-color: #666666;
+}
